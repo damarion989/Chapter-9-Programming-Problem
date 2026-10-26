@@ -1,3 +1,49 @@
+Class Bag extends InventoryComponent {
+    private String name;
+    private double baseWeight;
+    private ArrayList<InventoryComponent> items = new ArrayList<>();
+
+    public Bag(String name, double baseweight) {
+        this.name = name;
+        this.baseweight = baseWeight;
+    }
+
+
+    public void add(InventoryComponent component) {
+        items.remove(component);
+}
+
+ public InventoryComponent getChild(int i) {
+        return items.get(i);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getWeight() {
+        double totalWeight = baseWeight;
+
+        for (InventoryComponent component : items) {
+            totalWeight += component.getWeight();
+        }
+
+        return totalWeight;
+    }
+
+    public void displayInfo() {
+        System.out.println("Bag: " + name
+                + " | Empty weight: " + baseWeight + " lbs");
+
+        for (InventoryComponent component : items) {
+            component.displayInfo();
+        }
+
+        System.out.println("End of bag: " + name);
+    }
+}
+
+
 abstract class InventoryComponent {
     pubilc class add(InventoryComponent component)
       throw new UnsupportedOperationExcepion():
@@ -43,15 +89,15 @@ System.out.println("Item: " + name + " | " + weight + " lbs");
 }
 
 public class InventoryDemo {
-  public static void main(String[] args) {
-    InventoryComponent sword = new Item("Sword", 3.0);
-    InventoryComponent potion = new Item("Health Potion", 3.0);
+    public static void main(String[] args) {
+        InventoryComponent pouch = new Bag("Belt Pouch", 0.5);
 
-         sword.displayInfo();
-        potion.displayInfo();
+        pouch.add(new Item("Health Potion", 1.0));
+        pouch.add(new Item("Mana Potion", 1.0));
 
-        System.out.println("Sword weight: " + sword.getWeight());
-        System.out.println("Potion weight: " + potion.getWeight());
+        pouch.displayInfo();
+        System.out.println("Total weight: " + pouch.getWeight() + " lbs");
+        System.out.println("First item: " + pouch.getChild(0).getName());
     }
 }
     
