@@ -89,16 +89,50 @@ System.out.println("Item: " + name + " | " + weight + " lbs");
 }
 
 public class InventoryDemo {
-    public static void main(String[] args) {
-        InventoryComponent pouch = new Bag("Belt Pouch", 0.5);
+   public static void main(String[] args) {
+        InventoryComponent backpack = new Bag("Main Backpack", 2.0);
+        InventoryComponent bedroll = new Item("Bedroll", 5.0);
+        InventoryComponent rope = new Item("Rope", 3.0);
 
-        pouch.add(new Item("Health Potion", 1.0));
-        pouch.add(new Item("Mana Potion", 1.0));
+        backpack.add(bedroll);
+        backpack.add(rope);
 
-        pouch.displayInfo();
-        System.out.println("Total weight: " + pouch.getWeight() + " lbs");
-        System.out.println("First item: " + pouch.getChild(0).getName());
+        InventoryComponent potionPouch = new Bag("Potion Pouch", 0.5);
+        potionPouch.add(new Item("Health Potion", 1.0));
+        potionPouch.add(new Item("Mana Potion", 1.0));
+
+       InventoryComponent holdingBag = new Bag ("Bag of Holding", 1.0);
+        holdingBag.add(new Item("Spell Book", 2.0));
+
+       InventoryComponent gemBag = new Bag
+        gemBag.add(new Item("Ruby", 0.5));
+
+       holdingBag.add(gemBag);
+
+        backpack.add(potionPouch);
+        backpack.add(holdingBag);
+
+        System.out.println("=== FULL INVENTORY ===");
+        backpack.displayInfo();
+        System.out.println("Total weight: " + backpack.getWeight() + " lbs");
+
+        System.out.println("\n=== POTION POUCH ONLY ===");
+        potionPouch.displayInfo();
+        System.out.println("Pouch weight: " + potionPouch.getWeight() + " lbs");
+
+        System.out.println("\n=== UNSUPPORTED OPERATION ===");
+        InventoryComponent sword = new Item("Sword", 3.0);
+
+        try {
+            sword.add(new Item("Gem", 0.5));
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Warning: An item cannot contain other items.");
+        }
     }
 }
+
+
+       
+       
     
   
